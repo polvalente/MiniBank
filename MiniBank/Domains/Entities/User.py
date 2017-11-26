@@ -7,8 +7,7 @@ class User():
         self.is_person = is_person
         self.accounts = []
 
-    def create_account(self, acc_id, balance=0):
-        newAccount = Account(acc_id, self, balance)
+    def add_account(self, newAccount):
         self.accounts.append(newAccount)
         return newAccount
 

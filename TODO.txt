@@ -1,0 +1,20 @@
+Implement:
+> user repository
+> account repository
+> build state from event stack
+> build state up to a certain point
+> email CFO on account creation
+> Eval events to help with building state
+
+Test:
+> Transaction __float__
+> Transaction __str__
+> Transaction __dict__
+> Account __dict__
+> Account summary
+> User __dict__
+> User create_account
+> User account summary
+> Account Service
+> User Service
+> Event Handler
