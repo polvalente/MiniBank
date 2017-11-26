@@ -11,3 +11,8 @@ class User():
         newAccount = Account(acc_id, self, balance)
         self.accounts.append(newAccount)
         return newAccount
+
+    def get_account_summary(self):
+        s = "--- Account Summaries: ---\n"
+        s+= '\n'.join(map(lambda x: x.summary(), self.accounts))
+        return s

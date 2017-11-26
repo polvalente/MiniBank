@@ -1,4 +1,4 @@
-from MiniBank.Domains.Values.Transactions import *
+from MiniBank.Domains.Values.Transaction import *
 class Account():
     def __init__(self, acc_id,  owner, balance=0):
     # create an account
@@ -32,6 +32,12 @@ class Account():
 
         #Add transaction to account history
         t = Transaction("withdraw", amount)
-        self.history.append()
+        self.history.append(t)
         #Return the transaction
         return t
+
+    def summary(self):
+        s =  "--- Account %s summary: ---\n" % self.acc_id
+        s += '\n'.join(map(lambda x: '> '+str(x), self.history))  
+        s += '\n Balance: %.2f' % (sum(map(int, self.history)))
+        return s
