@@ -1,4 +1,4 @@
-class EventHandler():
+class EventHandler(object):
     def __init__(self, event_repository):
         self.event_repository = event_repository
 

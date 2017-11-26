@@ -1,7 +1,7 @@
 from copy import deepcopy as dcopy
 from MiniBank.Domains.Entities.Account import * 
 
-class AccountService():
+class AccountService(object):
     def __init__(self, account_repository, event_handler):
         self.account_repository = account_repository
         self.event_handler = event_handler
@@ -14,8 +14,8 @@ class AccountService():
         #adding event to event stack
         self.event_handler.create_account(new_account)
 
-        return self.account_repository.persist_account(new_account)
-
+        return self.account_repository.persist_account(new_account) # returns maybe account
+ 
     def search_account_by_id(self, account_id):
         return self.account_repository.search_account_by_id(account_id)
 
