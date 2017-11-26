@@ -25,3 +25,9 @@ class Transaction():
         s += "%.02f" % self.amount
         return s
 
+    def __dict__(self):
+        return {
+                'kind': self.kind,
+                'amount': self.amount
+                }
+

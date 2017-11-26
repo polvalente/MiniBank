@@ -7,6 +7,14 @@ class Account():
         self.balance = balance
         self.history = []
 
+    def __dict__(self):
+        return {
+                'account_id': self.acc_id
+                'owner': self.owner
+                'balance': self.balance
+                'history': self.history
+                }
+
     def deposit(self, amount):
         #check if amount is valid
         if(not (amount >= 0)):
