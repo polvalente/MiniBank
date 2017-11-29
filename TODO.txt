@@ -3,10 +3,10 @@ Implement:
 > account repository
 > build state from event stack
 > build state up to a certain point
-> email CFO on account creation
 > Eval events to help with building state
 
 Test:
+> email CFO on account creation
 > Account Service
 > User Service
 > Event Handler
