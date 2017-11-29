@@ -5,15 +5,13 @@ class Account():
         self.acc_id = acc_id
         self.owner = owner
         self.balance = balance
-        self.history = []
+        self.history = [Transaction("deposit", balance)]
 
-    def __dict__(self):
-        return {
-                'account_id': self.acc_id
-                'owner': self.owner
-                'balance': self.balance
-                'history': self.history
-                }
+    def __iter__(self):
+        yield 'account_id', self.acc_id
+        yield 'owner', self.owner
+        yield 'balance', self.balance
+        yield 'history', self.history
 
     def deposit(self, amount):
         #check if amount is valid
@@ -45,7 +43,7 @@ class Account():
         return t
 
     def summary(self):
-        s =  "--- Account %s summary: ---\n" % self.acc_id
+        s =  "--- Account %d summary: ---\n" % self.acc_id
         s += '\n'.join(map(lambda x: '> '+str(x), self.history))  
-        s += '\n Balance: %.2f' % (sum(map(int, self.history)))
+        s += '\nBalance: %.2f' % (sum(map(float, self.history)))
         return s

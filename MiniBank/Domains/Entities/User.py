@@ -15,3 +15,9 @@ class User():
         s = "--- Account Summaries: ---\n"
         s+= '\n'.join(map(lambda x: x.summary(), self.accounts))
         return s
+
+    def __iter__(self):
+        yield 'uid', self.uid
+        yield 'name', self.name
+        yield 'is_person', self.is_person
+        yield 'accounts', self.accounts
