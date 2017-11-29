@@ -1,6 +1,10 @@
 from copy import deepcopy as dcopy
 from MiniBank.Domains.Entities.Account import * 
 
+import smtplib
+import MiniBank.Config.config
+from email.mime.text import MIMEText
+
 class AccountService(object):
     def __init__(self, account_repository, event_handler):
         self.account_repository = account_repository
@@ -13,6 +17,8 @@ class AccountService(object):
         new_account = Account(account_id, owner, initial_balance)
         #adding event to event stack
         self.event_handler.create_account(new_account)
+
+        self.send_mail_to_cfo(self, new_account)
 
         return self.account_repository.persist_account(new_account) # returns maybe account
  
@@ -53,3 +59,23 @@ class AccountService(object):
         self.event_handler.apply_transaction(transaction)
 
         return dcopy(transaction)
+
+    def send_mail_to_cfo(self, account):
+        server = smtplib.SMTP(config.smtp_server_url, config.smtp_server_port)
+
+        dacc = dict(account)
+        dacc['owner'] = dacc['owner'].name
+
+        subject = "[Account Creation Notification Service]"
+
+        msg  = "Account Created\n"
+        msg += "--- Account Data: ---\n"
+        msg += json.dumps(dacc,sort_keys=True,indent=4,separators=(',',':'))
+
+        mail = """From: [SERVER] <%s>
+        To: CFO <%s>
+        Subject: %s
+
+        %s""" % (config.mail_server, config.cfo_email, subject, msg)
+
+        server.sendmail(config.mail_server, [config.cfo_email], mail) 
