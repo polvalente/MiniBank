@@ -17,7 +17,10 @@ class AccountService(object):
         #adding event to event stack
 
         self.send_mail_to_cfo(self, new_account)
-        return self.event_handler.create_account(owner, new_account)
+        if self.event_handler.create_account(owner, new_account) is None:
+            return None
+
+        return new_account
 
     def search_account_by_id(self, account_id):
         return self.event_handler.get_account_by_id(account_id)
