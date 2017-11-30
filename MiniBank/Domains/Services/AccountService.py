@@ -6,59 +6,50 @@ import MiniBank.Config.config
 from email.mime.text import MIMEText
 
 class AccountService(object):
-    def __init__(self, account_repository, event_handler):
-        self.account_repository = account_repository
+    def __init__(self, event_handler):
         self.event_handler = event_handler
 
     def create_account(self, owner, initial_balance=0):
         #Getting new account's id from repo
-        account_id = account_repository.get_new_account_id()
+        account_id = event_handler.get_new_account_id()
         #creating new account
         new_account = Account(account_id, owner, initial_balance)
         #adding event to event stack
-        self.event_handler.create_account(new_account)
 
         self.send_mail_to_cfo(self, new_account)
+        return self.event_handler.create_account(owner, new_account)
 
-        return self.account_repository.persist_account(new_account) # returns maybe account
- 
     def search_account_by_id(self, account_id):
-        return self.account_repository.search_account_by_id(account_id)
+        return self.event_handler.get_account_by_id(account_id)
 
     def search_accounts_by_owner(self, owner): 
-        return self.account_repository.search_accounts_by_owner(owner)
+        return self.event_handler.get_accounts_by_owner(owner)
 
     def deposit_to_account(self, account_id, amount):
-        account = self.search_account_by_id(account_id)
+        account = self.event_handler.get_account_by_id(account_id)
         if account is None:
             return None
         #apply transaction to account 
         transaction = account.deposit(amount)
-
-        #persist modified account to repo
-        self.account_repository.persist_account(account)
+        if transaction is None:
+            return None
 
         #add transaction to event stack
-        self.event_handler.apply_transaction(transaction)
-
-        return dcopy(transaction)
+        return self.event_handler.apply_transaction(account, transaction)
         
     def withdraw_from_account(self, owner, account_id, amount):
-        account = self.search_account_by_id(account_id)
+        account = self.event_handler.get_account_by_id(account_id)
 
         if account is None or account.owner != owner:
             return None
 
         #withdraw amount
         transaction = account.withdraw(amount)
-
-        #persist modified account
-        self.account_repository.persist_account(account)
+        if transaction is None:
+            return None
 
         #add transaction to event stack
-        self.event_handler.apply_transaction(transaction)
-
-        return dcopy(transaction)
+        return self.event_handler.apply_transaction(account, transaction)
 
     def send_mail_to_cfo(self, account):
         server = smtplib.SMTP(config.smtp_server_url, config.smtp_server_port)
