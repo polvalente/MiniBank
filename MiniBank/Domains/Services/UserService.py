@@ -16,6 +16,8 @@ class UserService(object):
         if new_account is None:
             return None
 
+        user.add_account(new_account)
+
         return self.event_handler.add_account(user, account)
 
     def get_account_summary(self, username):
