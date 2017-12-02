@@ -1,13 +1,11 @@
 Implement:
-> user repository
-> account repository
-> event repository
-> build state from event stack
-> build state up to a certain point
-> Eval events to help with building state
 > web interface
 
 Test:
+> Eval events to help with building state
+> build state up to a certain point
+> build state from event stack
+> event repository
 > email CFO on account creation
 > Account Service
 > User Service
