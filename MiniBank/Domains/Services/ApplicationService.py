@@ -56,10 +56,6 @@ class ApplicationService(object):
         #find account by id; app_state['accounts'] is alway ordered by account_id
         return self.application_state.accounts[account_id]
 
-    def get_accounts_by_owner(self, owner):
-        if type(owner) == type(''):
-            #if owner is string, search using 'owner' as username
-            owner = filter(lambda u: u.name == owner, self.application_state.users.values())
-        #else owner is already a User object
-        return owner.accounts
+    def get_accounts_by_owner_id(self, owner_id):
+        return self.application_state[owner_id].accounts
 

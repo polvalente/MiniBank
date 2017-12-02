@@ -49,5 +49,6 @@ class ApplicationState():
         elif event.etype == "Withdraw":
             account = Account(event.value['account'])
             transaction = Transaction(event.value['transaction'])
-            new_state.accounts[account.acc_id].deposit(transaction.value)
+            new_state.accounts[account.acc_id].withdraw(transaction.value)
+
         return new_state

@@ -6,30 +6,30 @@ import MiniBank.Config.config
 from email.mime.text import MIMEText
 
 class AccountService(object):
-    def __init__(self, event_handler):
-        self.event_handler = event_handler
+    def __init__(self, application_service):
+        self.application_service = application_service
 
-    def create_account(self, owner, initial_balance=0):
+    def create_account(self, owner_id, initial_balance=0):
         #Getting new account's id from repo
-        account_id = event_handler.get_new_account_id()
+        account_id = application_service.get_new_account_id()
         #creating new account
-        new_account = Account(account_id, owner, initial_balance)
+        new_account = Account(account_id, owner_id, initial_balance)
         #adding event to event stack
 
         self.send_mail_to_cfo(self, new_account)
-        if self.event_handler.create_account(owner, new_account) is None:
+        if self.application_service.create_account(owner_id, new_account) is None:
             return None
 
         return new_account
 
     def search_account_by_id(self, account_id):
-        return self.event_handler.get_account_by_id(account_id)
+        return self.application_service.get_account_by_id(account_id)
 
-    def search_accounts_by_owner(self, owner): 
-        return self.event_handler.get_accounts_by_owner(owner)
+    def search_accounts_by_owner_id(self, owner_id): 
+        return self.application_service.get_accounts_by_owner_id(owner_id)
 
     def deposit_to_account(self, account_id, amount):
-        account = self.event_handler.get_account_by_id(account_id)
+        account = self.application_service.get_account_by_id(account_id)
         if account is None:
             return None
         #apply transaction to account 
@@ -38,13 +38,13 @@ class AccountService(object):
             return None
 
         #add transaction to event stack
-        return self.event_handler.apply_transaction(account, transaction)
+        return self.application_service.apply_transaction(account, transaction)
         
-    def withdraw_from_account(self, owner, account_id, amount):
-        account = self.event_handler.get_account_by_id(account_id)
-
-        if account is None or account.owner != owner:
+    def withdraw_from_account(self, owner_id, account_id, amount):
+        if account is None or account.owner_id != owner_id:
             return None
+
+        account = self.application_service.get_account_by_id(account_id)
 
         #withdraw amount
         transaction = account.withdraw(amount)
@@ -52,13 +52,12 @@ class AccountService(object):
             return None
 
         #add transaction to event stack
-        return self.event_handler.apply_transaction(account, transaction)
+        return self.application_service.apply_transaction(account, transaction)
 
     def send_mail_to_cfo(self, account):
         server = smtplib.SMTP(config.smtp_server_url, config.smtp_server_port)
 
         dacc = dict(account)
-        dacc['owner'] = dacc['owner'].name
 
         subject = "[Account Creation Notification Service]"
 

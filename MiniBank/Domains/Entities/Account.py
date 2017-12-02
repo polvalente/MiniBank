@@ -1,17 +1,25 @@
+from MiniBank.Domains.Entities.User import *
 from MiniBank.Domains.Values.Transaction import *
+
 class Account():
-    def __init__(self, acc_id,  owner, balance=0):
+    def __init__(self, dict_or_acc_id,  owner_id, balance=0):
     # create an account
-        self.acc_id = acc_id
-        self.owner = owner
-        self.balance = balance
-        self.history = [Transaction("deposit", balance)]
+        if(isinstance(dict_or_acc_id, dict):
+            self.acc_id = dict_or_acc_id['acc_id']
+            self.owner_id = owner_id 
+            self.balance = dict_or_acc_id['balance']
+            self.history = map(lambda t: Transaction(t), dict_or_acc_id['history'])
+        else:
+            self.acc_id = acc_id
+            self.owner_id = owner_id
+            self.balance = balance
+            self.history = [Transaction("deposit", balance)]
 
     def __iter__(self):
         yield 'account_id', self.acc_id
-        yield 'owner', self.owner
+        yield 'owner_id', self.owner
         yield 'balance', self.balance
-        yield 'history', self.history
+        yield 'history', map(dict,self.history)
 
     def deposit(self, amount):
         #check if amount is valid
