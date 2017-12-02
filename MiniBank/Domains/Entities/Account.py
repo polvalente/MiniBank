@@ -2,22 +2,22 @@ from MiniBank.Domains.Entities.User import *
 from MiniBank.Domains.Values.Transaction import *
 
 class Account():
-    def __init__(self, dict_or_acc_id,  owner_id, balance=0):
+    def __init__(self, dict_or_acc_id,  owner_id=None, balance=0):
     # create an account
-        if(isinstance(dict_or_acc_id, dict):
-            self.acc_id = dict_or_acc_id['acc_id']
-            self.owner_id = owner_id 
+        if(isinstance(dict_or_acc_id, dict)):
+            self.acc_id = dict_or_acc_id['account_id']
+            self.owner_id = dict_or_acc_id['owner_id'] 
             self.balance = dict_or_acc_id['balance']
             self.history = map(lambda t: Transaction(t), dict_or_acc_id['history'])
         else:
-            self.acc_id = acc_id
+            self.acc_id = dict_or_acc_id
             self.owner_id = owner_id
             self.balance = balance
             self.history = [Transaction("deposit", balance)]
 
     def __iter__(self):
         yield 'account_id', self.acc_id
-        yield 'owner_id', self.owner
+        yield 'owner_id', self.owner_id
         yield 'balance', self.balance
         yield 'history', map(dict,self.history)
 

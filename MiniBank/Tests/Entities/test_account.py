@@ -6,13 +6,13 @@ from MiniBank.Domains.Values.Transaction import *
 class TestAccount(unittest.TestCase):
 
     def setUp(self):
-        self.account = Account(-1, "Paulo", 100) 
+        self.account = Account(-1, 1, 100) 
 
     def test_create_account(self):
         '''Created account should have the variables stored accordingly'''
         account = self.account
         self.assertEqual(account.acc_id,-1)
-        self.assertEqual(account.owner, "Paulo")
+        self.assertEqual(account.owner_id, 1)
         self.assertEqual(account.balance, 100)
         self.assertEqual(account.history, [Transaction("deposit", 100)])
 
@@ -46,10 +46,21 @@ class TestAccount(unittest.TestCase):
 
     def test_dict(self):
         account = self.account
-        adict = {'account_id': -1, 'owner': "Paulo", 'balance': 100, 'history': [Transaction("deposit", 100)]}
+        adict = {'account_id': -1, 'owner_id': 1, 'balance': 100, 'history': [dict(Transaction("deposit", 100))]}
         cast = dict(account)
         for key in adict:
             self.assertEqual(adict[key],cast[key])
+
+    def test_from_dict(self):
+        account = self.account
+        adict = {'account_id': -1, 'owner_id': 1, 'balance': 100, 'history': [dict(Transaction("deposit", 100))]}
+        new_account = Account(adict)
+        self.assertEqual(account.acc_id,new_account.acc_id)
+        self.assertEqual(account.owner_id, new_account.owner_id)
+        self.assertEqual(account.balance, new_account.balance)
+        self.assertEqual(account.history, new_account.history)
+
+
 
 
 

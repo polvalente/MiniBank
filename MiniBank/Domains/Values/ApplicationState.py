@@ -12,7 +12,7 @@ class ApplicationState():
         self.next_account_id += 1
         return self.next_account_id
 
-    def get_next_uid(self)
+    def get_next_uid(self):
         self.next_uid += 1
         return self.next_uid
 

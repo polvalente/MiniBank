@@ -1,7 +1,11 @@
 class Transaction():
-    def __init__(self, kind, value):
-        self.kind = kind
-        self.amount = value
+    def __init__(self, dict_or_kind, value=None):
+        if(isinstance(dict_or_kind, dict)):
+            self.kind = dict_or_kind['kind']
+            self.amount = dict_or_kind['amount']
+        else:
+            self.kind = dict_or_kind
+            self.amount = value
 
     def __eq__(self, other):
         return (self.kind == other.kind) and (self.amount == other.amount)

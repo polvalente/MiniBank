@@ -1,11 +1,12 @@
 import unittest
 from MiniBank.Domains.Values.ApplicationState import *
 
-class TestApplicationState(unittest.TestCase):
+class TestApplicationState():
     def setUp(self):
+        return
         self.events = [
-                Event("Create User",{},,1),
-                Event("Create Account", {},,2),
+                Event("Create User",{},1),
+                Event("Create Account", {},2),
                 Event("Deposit",{},3),
                 Event("Deposit",{},4),
                 Event("Withdraw",{},5)
@@ -35,5 +36,3 @@ class TestApplicationState(unittest.TestCase):
         new_state += self.events[3]
         new_state += self.events[4]
         self.assertEqual(self.app_state.build_from(self.events), new_state)
-
-

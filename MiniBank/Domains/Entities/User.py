@@ -1,15 +1,15 @@
 from MiniBank.Domains.Entities.Account import *
 
 class User():
-    def __init__(self, dict_or_uid, name, is_person):
+    def __init__(self, dict_or_uid, name=None, is_person=None):
         if(isinstance(dict_or_uid, dict)):
             self.uid = dict_or_uid['uid']
             self.name = dict_or_uid['name']
             self.is_person = dict_or_uid['is_person']
             #converting accounts from dict to 
-            self.accounts = map(lambda a: Account(a), dict_or_uid['accounts']
+            self.accounts = map(lambda a: Account(a), dict_or_uid['accounts'])
         else:
-            self.uid = uid
+            self.uid = dict_or_uid
             self.name = name
             self.is_person = is_person
             self.accounts = []

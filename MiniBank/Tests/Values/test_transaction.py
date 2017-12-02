@@ -21,6 +21,9 @@ class TestTransaction(unittest.TestCase):
         cast = dict(self.deposit)
         for key in cast:
             self.assertEqual(tdict[key], cast[key])
+    def test_from_dict(self):
+        tdict = {'kind': "deposit", 'amount':5.5}
+        self.assertEqual(self.deposit,Transaction(tdict))
 
 if __name__ == "__main__":
     unittest.main()
