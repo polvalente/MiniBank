@@ -15,6 +15,12 @@ class Account():
             self.balance = balance
             self.history = [Transaction("deposit", balance)]
 
+    def __eq__(self, other):
+        return self.acc_id == other.acc_id and\
+                self.owner_id == other.owner_id and\
+                self.balance == other.balance and\
+                self.history == other.history
+
     def __iter__(self):
         yield 'account_id', self.acc_id
         yield 'owner_id', self.owner_id

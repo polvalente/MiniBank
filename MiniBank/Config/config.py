@@ -7,8 +7,8 @@ mail_server = "local@server.com"
 cfo_email = "cfo@server.com"
 
 #DATABASE CONFIG
-db_name = "event_db"
+db_name = "minibank"
 db_address = "127.0.0.1"
-db_port = "5050"
-db_user = "user"
-db_pass = "password"
+db_port = "5432"
+db_user = ""
+db_pass = ""

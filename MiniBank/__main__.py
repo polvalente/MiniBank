@@ -12,7 +12,7 @@ if len(argv) == 2:
     repo_data['filename'] = argv[1]
     repo_data['type'] = 'in memory'
 else:
-    repo_data{
+    repo_data = {
             'dbname':config.db_name,
             'address':config.db_address,
             'port':config.db_port,

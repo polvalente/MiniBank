@@ -28,3 +28,9 @@ class User():
         yield 'name', self.name
         yield 'is_person', self.is_person
         yield 'accounts', map(dict, self.accounts)
+
+    def __eq__(self, other):
+        return self.uid == other.uid and\
+                self.name == other.name and\
+                self.is_person == other.is_person and\
+                self.accounts == other.accounts
