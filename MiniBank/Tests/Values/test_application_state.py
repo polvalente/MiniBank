@@ -33,11 +33,9 @@ class TestApplicationState(unittest.TestCase):
 
     def test_get_next_account_id(self):
         self.assertEqual(self.app_state.get_next_account_id(), 1)
-        self.assertEqual(self.app_state.get_next_account_id(), 2)
     
     def test_get_next_uid(self):
         self.assertEqual(self.app_state.get_next_uid(), 1)
-        self.assertEqual(self.app_state.get_next_uid(), 2)
 
     def test_add_and_eq(self):
         new_state = dcopy(self.app_state)

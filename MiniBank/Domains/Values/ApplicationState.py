@@ -14,12 +14,12 @@ class ApplicationState():
         self.next_account_id = next_account_id
 
     def get_next_account_id(self):
-        self.next_account_id += 1
-        return self.next_account_id
+        #self.next_account_id += 1
+        return self.next_account_id + 1
 
     def get_next_uid(self):
-        self.next_uid += 1
-        return self.next_uid
+        #self.next_uid += 1
+        return self.next_uid + 1
 
     def build_from(self, events):
         '''Evaluate events to build application state'''
@@ -34,14 +34,19 @@ class ApplicationState():
 
         #User events
         if event.etype == "Create User":
-            new_state.next_uid += 1
+            #new_state.next_uid += 1
             user = User(event.value['user'])
+            
+            new_state.next_uid = max([new_state.next_uid + 1, user.uid])
+            
             new_state.users[user.uid] = user
         #Account events
         elif event.etype == "Create Account":
-            new_state.next_account_id += 1
 
             account = Account(event.value['account'])
+            
+            new_state.next_account_id = max([new_state.next_account_id + 1, account.acc_id])
+            
             owner = User(event.value['owner'])
             new_state.users[owner.uid] = owner
             new_state.users[owner.uid].accounts.append(account)

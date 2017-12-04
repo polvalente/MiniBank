@@ -18,20 +18,8 @@ class AbstractEventRepository(object):
 class InMemoryEventRepository(AbstractEventRepository):
     '''In Memory Event Repository that is able to load from/save to file using Pickle'''
     def __init__(self, repo_data={'filename':''}):
-        if repo_data['filename'] == '':
-            self.events = []
-            self.filename = 'repo.p'
-            return
-
+        self.events = []
         self.next_event_id = 0
-
-        self.filename = repo_data['filename']
-        with open(self.filename, 'rb') as f:
-            self.events = pickle.load(f)
-
-    def __del__(self):
-        with open(self.filename, 'wb') as f:
-            pickle.dump(self.events, f)
 
     def persist_event(self, event):
         self.events.append(event)

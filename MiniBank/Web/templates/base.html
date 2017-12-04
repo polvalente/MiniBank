@@ -1,0 +1,35 @@
+<html>
+    <head>
+        <title> Minibank Web Interface </title>
+    </head>
+    <body>
+        <div>
+            <ul>
+                <li><a href='/'>Home</a></li>
+                <li>
+                    <div>
+                        <p> Entity Lists </p>
+                        <ul>
+                            <li><a href='/events'>Events</a></li>
+                            <li><a href='/users'>Users</a></li>
+                            <li><a href='/accounts'>Accoutns</a></li>
+                        </ul>
+                    </div>
+                </li>
+                <li>
+                    <div>
+                            <p> System Management </p>
+                            <ul>
+                                <li><a href='/create_user'>Create User</a></li>
+                                <li><a href='/create_account'>Create Account</a></li>
+                                <li><a href='/deposit_account'>Deposit To Account</a></li>
+                                <li><a href='/withdraw_account'>Withdraw From Account</a></li>
+                            </ul>
+                    </div>
+                </li>
+            </ul>
+        </div>
+
+        {% block content %}{% endblock %}
+    </body>
+</html>

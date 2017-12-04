@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h1>Welcome to the MiniBank Web Interface</h1>
+<h3>Username: {{user}}</h3>
+
+{% with messages = get_flashed_messages() %}
+    {% if messages %}
+    <ul>
+    {% for message in messages %}
+        <li>{{ message }}</li>
+    {% endfor %}
+    </ul>
+    {% endif %}
+{% endwith %}
+
+{% endblock %}
