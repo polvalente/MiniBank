@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h1> {{ transaction_type }} Form:</h1>
+
+<form action="" method="post" name="transaction_form">
+    {{ form.hidden_tag() }}
+    {% if transaction_type == "Withdraw" %}
+    <p>
+        User id: {{form.user_id}}
+    </p>
+    {% endif %}
+    <p>
+        Account id: {{form.account_id}}
+    </p>
+    <p>
+        {{ transaction_type }} value: {{form.transaction_value}}
+    </p>
+    <p><input type="submit" value="{{transaction_type}}"></p>
+</form>
+
+{% endblock %}

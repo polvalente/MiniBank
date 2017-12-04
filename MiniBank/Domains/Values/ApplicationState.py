@@ -58,11 +58,19 @@ class ApplicationState():
             for a in new_state.accounts.values():
                 if a.acc_id == account.acc_id:
                     a.deposit(transaction.amount)
+            for a in new_state.users[account.owner_id].accounts:
+                if a.acc_id == account.acc_id:
+                    a.deposit(transaction.amount)
+
+
 
         elif event.etype == "Withdraw":
             account = Account(event.value['account'])
             transaction = Transaction(event.value['transaction'])
             for a in new_state.accounts.values():
+                if a.acc_id == account.acc_id:
+                    a.withdraw(transaction.amount)
+            for a in new_state.users[account.owner_id].accounts:
                 if a.acc_id == account.acc_id:
                     a.withdraw(transaction.amount)
         else:

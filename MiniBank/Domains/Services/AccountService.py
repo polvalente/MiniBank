@@ -14,6 +14,8 @@ class AccountService(object):
         #Getting new account's id from repo
         account_id = self.application_service.get_new_account_id()
         #creating new account
+        if initial_balance < 0:
+            return None
         new_account = Account(account_id, owner_id, initial_balance)
         #adding event to event stack
 
@@ -34,7 +36,7 @@ class AccountService(object):
         if account is None:
             return None
         #apply transaction to account 
-        transaction = account.deposit(amount)
+        transaction = account.can_deposit(amount)
         if transaction is None:
             return None
 
@@ -47,7 +49,7 @@ class AccountService(object):
             return None
 
         #withdraw amount
-        transaction = account.withdraw(amount)
+        transaction = account.can_withdraw(amount)
         if transaction is None:
             return None
 
@@ -61,7 +63,8 @@ class AccountService(object):
         except:
             return None
 
-        for account in self.accounts_to_send.append(account):
+        self.accounts_to_send.append(account)
+        for account in self.accounts_to_send:
             dacc = dict(account)
 
             subject = "[Account Creation Notification Service]"

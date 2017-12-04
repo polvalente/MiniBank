@@ -26,6 +26,20 @@ class Account():
         yield 'balance', self.balance
         yield 'history', map(dict,self.history)
 
+    def can_deposit(self, amount):
+        #check if amount is valid
+        if(not (amount >= 0)):
+            return None
+        #amount is valid, return valid transaction
+        return Transaction("deposit", amount)
+
+    def can_withdraw(self, amount):
+        #check if amount is valid and if there is enough balance
+        if(not(amount >= 0) or (not (self.balance >= amount))):
+            return None
+        #everything ok, return valid transaction
+        return Transaction("withdraw", amount)
+
     def deposit(self, amount):
         #check if amount is valid
         if(not (amount >= 0)):
