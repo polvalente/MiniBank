@@ -1,4 +1,3 @@
-from MiniBank.Domains.Entities.User import *
 from MiniBank.Domains.Values.Transaction import *
 
 class Account():

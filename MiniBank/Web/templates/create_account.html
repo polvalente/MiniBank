@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h1>Insert New User's Data:</h1>
+
+<form action="" method="post" name="create_account">
+    {{ form.hidden_tag() }}
+    <p>
+        Insert owner's uid:<br>
+        {{ form.owner_id }}<br>
+        {% for error in form.owner_id.errors %}
+        <span style="color: red;">[{{ error }}]</span>
+        {% endfor %}
+    </p>
+    <p> Initial deposit: {{ form.initial_balance }} </p>
+    <p><input type="submit" value="Create Account"></p>
+</form>
+
+{% endblock %}

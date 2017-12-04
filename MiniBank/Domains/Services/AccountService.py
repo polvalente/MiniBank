@@ -8,6 +8,7 @@ from email.mime.text import MIMEText
 class AccountService(object):
     def __init__(self, application_service):
         self.application_service = application_service
+        self.accounts_to_send = []
 
     def create_account(self, owner_id, initial_balance=0):
         #Getting new account's id from repo
@@ -54,20 +55,27 @@ class AccountService(object):
         return self.application_service.apply_transaction(account, transaction)
 
     def send_mail_to_cfo(self, account):
-        server = smtplib.SMTP(config.smtp_server_url, config.smtp_server_port)
+        self.accounts_to_send.append(account)
+        try:
+            server = smtplib.SMTP(config.smtp_server_url, config.smtp_server_port)
+        except:
+            return None
 
-        dacc = dict(account)
+        for account in self.accounts_to_send.append(account):
+            dacc = dict(account)
 
-        subject = "[Account Creation Notification Service]"
+            subject = "[Account Creation Notification Service]"
 
-        msg  = "Account Created\n"
-        msg += "--- Account Data: ---\n"
-        msg += json.dumps(dacc,sort_keys=True,indent=4,separators=(',',':'))
+            msg  = "Account Created\n"
+            msg += "--- Account Data: ---\n"
+            msg += json.dumps(dacc,sort_keys=True,indent=4,separators=(',',':'))
 
-        mail = """From: [SERVER] <%s>
-        To: CFO <%s>
-        Subject: %s
+            mail = """From: [SERVER] <%s>
+            To: CFO <%s>
+            Subject: %s
 
-        %s""" % (config.mail_server, config.cfo_email, subject, msg)
+            %s""" % (config.mail_server, config.cfo_email, subject, msg)
 
-        server.sendmail(config.mail_server, [config.cfo_email], mail) 
+            server.sendmail(config.mail_server, [config.cfo_email], mail) 
+        self.accounts_to_send = []
+

@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h1> Account List </h1>
+<ul>
+{% for account in accounts %}
+<li><p> <pre>{{account|safe}}</pre> </p></li>
+{% endfor %}
+</ul>
+
+ {% endblock %}
