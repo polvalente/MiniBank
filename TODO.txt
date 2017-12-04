@@ -2,11 +2,3 @@ Implement:
 > web interface
 
 Test:
-> Eval events to help with building state
-> build state up to a certain point
-> build state from event stack
-> event repository
-> email CFO on account creation
-> Account Service
-> User Service
-> Event Handler
