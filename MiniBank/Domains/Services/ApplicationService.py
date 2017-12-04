@@ -20,8 +20,10 @@ class ApplicationService(object):
         return self.event_repository.persist_event(event)
 
     def create_account(self, owner_id, new_account):
-        event_id = self.event_repository.get_next_id()
         owner = self.search_user_by_uid(owner_id)
+        if owner is None:
+            return None
+        event_id = self.event_repository.get_next_id()
         event = Event("Create Account", {'account': dict(new_account), 'owner': dict(owner)}, event_id)
         self.application_state += event
         return self.event_repository.persist_event(event)
@@ -41,6 +43,8 @@ class ApplicationService(object):
     def search_user_by_uid(self, uid):
         #search done on in_memory application_state
         l = filter(lambda u: u.uid == uid, self.application_state.users.values())
+        if len(l) != 1:
+            return None
         return l[0]
 
     def get_new_user_id(self):
@@ -59,7 +63,12 @@ class ApplicationService(object):
 
     def get_account_by_id(self, account_id):
         #find account by id; app_state['accounts'] is alway ordered by account_id
-        return self.application_state.accounts[account_id]
+        try:
+            account = self.application_state.accounts[account_id]
+        except:
+            account = None
+        return account
+        
 
     def get_accounts_by_owner_id(self, owner_id):
         return self.application_state.users[owner_id].accounts

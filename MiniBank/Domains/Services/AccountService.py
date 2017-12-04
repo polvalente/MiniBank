@@ -1,8 +1,8 @@
 from copy import deepcopy as dcopy
 from MiniBank.Domains.Entities.Account import * 
 
-import smtplib
-import MiniBank.Config.config
+import smtplib, json
+from MiniBank.Config import config
 from email.mime.text import MIMEText
 
 class AccountService(object):
@@ -11,12 +11,12 @@ class AccountService(object):
 
     def create_account(self, owner_id, initial_balance=0):
         #Getting new account's id from repo
-        account_id = application_service.get_new_account_id()
+        account_id = self.application_service.get_new_account_id()
         #creating new account
         new_account = Account(account_id, owner_id, initial_balance)
         #adding event to event stack
 
-        self.send_mail_to_cfo(self, new_account)
+        self.send_mail_to_cfo(new_account)
         if self.application_service.create_account(owner_id, new_account) is None:
             return None
 
@@ -41,10 +41,9 @@ class AccountService(object):
         return self.application_service.apply_transaction(account, transaction)
         
     def withdraw_from_account(self, owner_id, account_id, amount):
+        account = self.application_service.get_account_by_id(account_id)
         if account is None or account.owner_id != owner_id:
             return None
-
-        account = self.application_service.get_account_by_id(account_id)
 
         #withdraw amount
         transaction = account.withdraw(amount)
