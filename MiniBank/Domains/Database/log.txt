@@ -85,3 +85,10 @@
 2017-12-03 10:29:56.432 -02 [66190] STATEMENT:  INSERT INTO events VALUES(1,'Create User', '{"user": {"is_person": true, "accounts": [], "uid": 1, "name": "Paulo"}}') ON CONFLICT DO UPDATE
 2017-12-03 10:29:56.444 -02 [66191] ERROR:  syntax error at end of input at character 141
 2017-12-03 10:29:56.444 -02 [66191] STATEMENT:  INSERT INTO events VALUES(1,'Create User', '{"user": {"is_person": true, "accounts": [], "uid": 1, "name": "Paulo"}}') ON CONFLICT DO UPDATE
+2017-12-04 00:11:32.480 -02 [91981] FATAL:  lock file "postmaster.pid" already exists
+2017-12-04 00:11:32.480 -02 [91981] HINT:  Is another postmaster (PID 63655) running in data directory "/Users/valente/Dropbox/Programas/MiniBank/MiniBank/Domains/Database/PostgresDatabase"?
+2017-12-04 00:13:07.627 -02 [63655] LOG:  received fast shutdown request
+2017-12-04 00:13:07.628 -02 [63655] LOG:  aborting any active transactions
+2017-12-04 00:13:07.632 -02 [63655] LOG:  worker process: logical replication launcher (PID 63662) exited with exit code 1
+2017-12-04 00:13:07.633 -02 [63657] LOG:  shutting down
+2017-12-04 00:13:07.738 -02 [63655] LOG:  database system is shut down
