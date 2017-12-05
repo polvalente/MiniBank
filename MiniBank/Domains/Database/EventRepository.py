@@ -45,34 +45,53 @@ class PersistentEventRepository(AbstractEventRepository):
         self.next_event_id = 0
         try:
             self.repo_data = repo_data
-            self.connection = psycopg2.connect("dbname='%s' user='%s' host='%s' password='%s' port='%s'" % (repo_data['dbname'], repo_data['user'], repo_data['address'], repo_data['pass'], repo_data['port']))
+            self.connect_db()
             self.connection.autocommit = True
             self.cursor = self.connection.cursor()
             self.create_table()
-        except:
+        except Exception as e:
+            print e
             print "Failed to connect to repository %s@%s:%s" % (repo_data['dbname'], repo_data['address'], repo_data['port'])
 
+    def connect_db(self):
+        repo_data = self.repo_data
+        self.connection = psycopg2.connect("dbname='%s' user='%s' host='%s' password='%s' port='%s'" % (repo_data['dbname'], repo_data['user'], repo_data['address'], repo_data['pass'], repo_data['port']))
+        
     def create_table(self):
         create_table_command = "CREATE TABLE IF NOT EXISTS events(id serial PRIMARY KEY, type varchar(30), data jsonb)"
-        self.cursor.execute(create_table_command)
+        try:
+            self.cursor.execute(create_table_command)
+        except:
+            pass
 
     def persist_event(self, event):
-        '''persist event into storage'''
+        '''persist event into storage''' 
         if isinstance(event, Event):
             event = dict(event)
         insert_command = "INSERT INTO events VALUES("+str(event["event_id"])+",'"+event["type"]+"', '"+json.dumps(event["value"])+"') ON CONFLICT (id) DO UPDATE SET id="+str(event["event_id"])+", type='"+event["type"]+"', data='"+json.dumps(event["value"])+"'"
-        self.cursor.execute(insert_command)
+        
+        
+        try:
+            self.cursor.execute(insert_command)
+        except:
+            return None
         return event
 
     def get_all_events(self, last_event_id=None):   
         '''Get all events, or if passed 'last_event_id' arg, get all events until specified id'''
         #get all events from database
-        self.cursor.execute("SELECT * FROM events")
+        try:
+            self.cursor.execute("SELECT * FROM events")
+        except:
+            return []
         events = self.cursor.fetchall()
 
         #sort events by id
         events = list(sorted(events, key=lambda e: e[0]))
-        self.next_event_id = events[-1][0]
+        if len(events) == 0:
+            self.next_event_id = 0
+        else:
+            self.next_event_id = events[-1][0]
         #convert to event objects
         events = list(map(lambda e: Event(e[1], e[2], e[0]), events))
 

@@ -10,9 +10,9 @@ mail_server = "local@server.com"
 cfo_email = "cfo@server.com"
 
 #DATABASE CONFIG
-db_type = "in_memory"
-db_name = "minibank"
+db_type = "persistent"
+db_name = "postgres"
 db_address = "127.0.0.1"
 db_port = "5432"
-db_user = ""
-db_pass = ""
+db_user = "test_user"
+db_pass = "test_password"

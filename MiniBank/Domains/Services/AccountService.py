@@ -84,6 +84,9 @@ class AccountService(object):
 
             %s""" % (config.mail_server, config.cfo_email, subject, msg)
 
-            server.sendmail(config.mail_server, [config.cfo_email], mail) 
+            try:
+                server.sendmail(config.mail_server, [config.cfo_email], mail) 
+            except:
+                return
         self.accounts_to_send = []
 
