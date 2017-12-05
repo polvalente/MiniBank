@@ -11,6 +11,11 @@ Database is a simple stack of JSON objects representing the events needed to reb
 
 There will be a simple web interface to interact with the system, from the point of view of a sysadmin.
 
+## Configuration
+
+A configuration file (MiniBank/Config/config.py) is provided, with explanations for each option inside
+There, it is possible to config the desired database type and associated data, as well as the SMTP server and the CFO email
+
 ## Running
 
 - To execute the program properly, the modules listed in the 'requirements.txt' file must be installed.
