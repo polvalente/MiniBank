@@ -23,3 +23,8 @@ There, it is possible to config the desired database type and associated data, a
     bash run.sh
 - Finally, the application is started by issuing the command:
     python -m MiniBank
+
+## Unit Tests
+
+To run unit tests, 'run_tests.sh' script is provided.
+    bash run_tests.sh
