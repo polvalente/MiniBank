@@ -10,3 +10,11 @@ This project is being developed in Python so I can focus on learning the theory 
 Database is a simple stack of JSON objects representing the events needed to rebuild application state. Implementation in PostgreSQL
 
 There will be a simple web interface to interact with the system, from the point of view of a sysadmin.
+
+## Running
+
+- To execute the program properly, the modules listed in the 'requirements.txt' file must be installed.
+- Afterwards, the postgres database and the smtp mock server must be run by executing the 'run.sh' script
+    bash run.sh
+- Finally, the application is started by issuing the command:
+    python -m MiniBank
