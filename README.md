@@ -23,6 +23,8 @@ There, it is possible to config the desired database type and associated data, a
     bash run.sh
 - Finally, the application is started by issuing the command:
     python -m MiniBank
+    
+Python 2.7 must be used
 
 ## Unit Tests
 
