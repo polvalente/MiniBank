@@ -17,14 +17,14 @@ class test_ApplicationService(unittest.TestCase):
         event_user_dict = {'user':dict(new_user)}
 
         #account
-        new_account = Account(1, 1, 0)
+        new_account = Account(1, 1, 0, 1)
         self.new_account = new_account
         event_account_dict = {'account':dict(new_account), 'owner':dict(new_user)} 
         
         #transactions
-        event_deposit1_dict  = {'account': dict(new_account), 'transaction': dict(Transaction("deposit", 10))}
-        event_deposit2_dict  = {'account': dict(new_account), 'transaction': dict(Transaction("deposit", 200))}
-        event_withdraw1_dict = {'account': dict(new_account),'transaction': dict(Transaction("withdraw",110))}
+        event_deposit1_dict  = {'account': dict(new_account), 'transaction': dict(Transaction("deposit", 10, 2))}
+        event_deposit2_dict  = {'account': dict(new_account), 'transaction': dict(Transaction("deposit", 200, 3))}
+        event_withdraw1_dict = {'account': dict(new_account),'transaction': dict(Transaction("withdraw",110, 4))}
 
         self.events = [
                 Event("Create User",event_user_dict,1),
@@ -39,9 +39,9 @@ class test_ApplicationService(unittest.TestCase):
         self.post_user = dcopy(new_user)
         self.post_account = dcopy(new_account)
         self.post_user.add_account(self.post_account)
-        self.post_account.deposit(10)
-        self.post_account.deposit(200)
-        self.post_account.withdraw(110)
+        self.post_account.deposit(10,2)
+        self.post_account.deposit(200,3)
+        self.post_account.withdraw(110,4)
 
         self.app_service = ApplicationService(self.event_repo)
 
@@ -58,9 +58,9 @@ class test_ApplicationService(unittest.TestCase):
         for event in self.events:
             self.event_repo.persist_event(event)
         self.app_service.build_application_state(3)
-        result = self.app_service.apply_transaction(self.new_account, Transaction("deposit",200))
+        result = self.app_service.apply_transaction(self.new_account, Transaction("deposit",200,3))
         self.assertEqual(result, self.events[3])
-        result = self.app_service.apply_transaction(self.new_account, Transaction("withdraw", 110))
+        result = self.app_service.apply_transaction(self.new_account, Transaction("withdraw", 110,4))
         self.assertEqual(result, self.events[4])
 
     def test_search_user_by_uid(self):
@@ -75,16 +75,6 @@ class test_ApplicationService(unittest.TestCase):
     def test_get_new_user_id(self):
         result = self.app_service.get_new_user_id()
         self.assertEqual(result, 1)
-
-    #def test_add_account(self):
-    #    for event in self.events:
-    #        self.event_repo.persist_event(event)
-    #    self.app_service = ApplicationService(self.event_repo)
-
-    #    account = Account(2,1,0)
-    #    user = self.app_service.search_user_by_uid(1)
-    #    result = self.app_service.add_account(user, account)
-    #    self.assertEqual(result, account) 
 
     def test_get_account_by_id(self):
         for event in self.events:

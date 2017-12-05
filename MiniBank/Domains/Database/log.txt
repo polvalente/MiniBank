@@ -92,3 +92,49 @@
 2017-12-04 00:13:07.632 -02 [63655] LOG:  worker process: logical replication launcher (PID 63662) exited with exit code 1
 2017-12-04 00:13:07.633 -02 [63657] LOG:  shutting down
 2017-12-04 00:13:07.738 -02 [63655] LOG:  database system is shut down
+2017-12-05 00:37:28.876 -02 [17861] LOG:  listening on IPv6 address "::1", port 5432
+2017-12-05 00:37:28.879 -02 [17861] LOG:  listening on IPv6 address "fe80::1%lo0", port 5432
+2017-12-05 00:37:28.879 -02 [17861] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2017-12-05 00:37:28.881 -02 [17861] LOG:  listening on Unix socket "/tmp/.s.PGSQL.5432"
+2017-12-05 00:37:28.910 -02 [17862] LOG:  database system was shut down at 2017-12-04 00:13:07 -02
+2017-12-05 00:37:28.933 -02 [17861] LOG:  database system is ready to accept connections
+2017-12-05 00:40:26.826 -02 [18118] FATAL:  database "valente" does not exist
+2017-12-05 00:40:45.117 -02 [18150] FATAL:  database "MiniBank/Domains/Database/PostgresDatabase" does not exist
+2017-12-05 00:40:50.556 -02 [18181] FATAL:  database "MiniBank/Domains/Database/PostgresDatabase" does not exist
+2017-12-05 00:40:52.287 -02 [18212] FATAL:  database "MiniBank/Domains/Database/PostgresDatabase/" does not exist
+2017-12-05 00:40:53.944 -02 [18243] FATAL:  database "MiniBank/Domains/Database/PostgresDatabase" does not exist
+2017-12-05 00:43:10.793 -02 [18276] ERROR:  syntax error at or near "dt" at character 1
+2017-12-05 00:43:10.793 -02 [18276] STATEMENT:  dt
+	SELECT * FROM TABLE events
+	SELECT * FROM TABLE events
+	;
+2017-12-05 00:43:19.973 -02 [18276] ERROR:  syntax error at or near "TABLE" at character 15
+2017-12-05 00:43:19.973 -02 [18276] STATEMENT:  SELECT * FROM TABLE events;
+2017-12-05 00:43:22.243 -02 [18276] ERROR:  syntax error at or near "TABLE" at character 15
+2017-12-05 00:43:22.243 -02 [18276] STATEMENT:  SELECT * FROM TABLE events;
+2017-12-05 00:44:09.206 -02 [18355] ERROR:  relation "events" does not exist at character 13
+2017-12-05 00:44:09.206 -02 [18355] STATEMENT:  INSERT INTO events VALUES(1,'Create User', '{"user": {"is_person": true, "accounts": [], "uid": 1, "name": "Paulo"}}') ON CONFLICT DO NOTHING
+2017-12-05 00:44:09.219 -02 [18356] ERROR:  relation "events" does not exist at character 13
+2017-12-05 00:44:09.219 -02 [18356] STATEMENT:  INSERT INTO events VALUES(1,'Create User', '{"user": {"is_person": true, "accounts": [], "uid": 1, "name": "Paulo"}}') ON CONFLICT DO NOTHING
+2017-12-05 00:45:22.862 -02 [18423] ERROR:  syntax error at end of input at character 141
+2017-12-05 00:45:22.862 -02 [18423] STATEMENT:  INSERT INTO events VALUES(1,'Create User', '{"user": {"is_person": true, "accounts": [], "uid": 1, "name": "Paulo"}}') ON CONFLICT DO UPDATE
+2017-12-05 00:45:22.872 -02 [18424] ERROR:  syntax error at end of input at character 141
+2017-12-05 00:45:22.872 -02 [18424] STATEMENT:  INSERT INTO events VALUES(1,'Create User', '{"user": {"is_person": true, "accounts": [], "uid": 1, "name": "Paulo"}}') ON CONFLICT DO UPDATE
+2017-12-05 00:48:03.405 -02 [18494] ERROR:  syntax error at or near "(" at character 152
+2017-12-05 00:48:03.405 -02 [18494] STATEMENT:  INSERT INTO events VALUES(1,'Create User', '{"user": {"is_person": true, "accounts": [], "uid": 1, "name": "Paulo"}}') ON CONFLICT DO UPDATE SET VALUES(1,'Create User', '{"user": {"is_person": true, "accounts": [], "uid": 1, "name": "Paulo"}}')
+2017-12-05 00:48:03.414 -02 [18495] ERROR:  syntax error at or near "(" at character 152
+2017-12-05 00:48:03.414 -02 [18495] STATEMENT:  INSERT INTO events VALUES(1,'Create User', '{"user": {"is_person": true, "accounts": [], "uid": 1, "name": "Paulo"}}') ON CONFLICT DO UPDATE SET VALUES(1,'Create User', '{"user": {"is_person": true, "accounts": [], "uid": 1, "name": "Paulo"}}')
+2017-12-05 00:48:57.441 -02 [18558] ERROR:  syntax error at or near "type" at character 151
+2017-12-05 00:48:57.441 -02 [18558] STATEMENT:  INSERT INTO events VALUES(1,'Create User', '{"user": {"is_person": true, "accounts": [], "uid": 1, "name": "Paulo"}}') ON CONFLICT DO UPDATE SET id=1 type='Create User' data='{"user": {"is_person": true, "accounts": [], "uid": 1, "name": "Paulo"}}')
+2017-12-05 00:48:57.452 -02 [18559] ERROR:  syntax error at or near "type" at character 151
+2017-12-05 00:48:57.452 -02 [18559] STATEMENT:  INSERT INTO events VALUES(1,'Create User', '{"user": {"is_person": true, "accounts": [], "uid": 1, "name": "Paulo"}}') ON CONFLICT DO UPDATE SET id=1 type='Create User' data='{"user": {"is_person": true, "accounts": [], "uid": 1, "name": "Paulo"}}')
+2017-12-05 00:49:15.246 -02 [18626] ERROR:  syntax error at or near ")" at character 251
+2017-12-05 00:49:15.246 -02 [18626] STATEMENT:  INSERT INTO events VALUES(1,'Create User', '{"user": {"is_person": true, "accounts": [], "uid": 1, "name": "Paulo"}}') ON CONFLICT DO UPDATE SET id=1, type='Create User', data='{"user": {"is_person": true, "accounts": [], "uid": 1, "name": "Paulo"}}')
+2017-12-05 00:49:15.257 -02 [18627] ERROR:  syntax error at or near ")" at character 251
+2017-12-05 00:49:15.257 -02 [18627] STATEMENT:  INSERT INTO events VALUES(1,'Create User', '{"user": {"is_person": true, "accounts": [], "uid": 1, "name": "Paulo"}}') ON CONFLICT DO UPDATE SET id=1, type='Create User', data='{"user": {"is_person": true, "accounts": [], "uid": 1, "name": "Paulo"}}')
+2017-12-05 00:49:52.090 -02 [18690] ERROR:  ON CONFLICT DO UPDATE requires inference specification or constraint name at character 120
+2017-12-05 00:49:52.090 -02 [18690] HINT:  For example, ON CONFLICT (column_name).
+2017-12-05 00:49:52.090 -02 [18690] STATEMENT:  INSERT INTO events VALUES(1,'Create User', '{"user": {"is_person": true, "accounts": [], "uid": 1, "name": "Paulo"}}') ON CONFLICT DO UPDATE SET id=1, type='Create User', data='{"user": {"is_person": true, "accounts": [], "uid": 1, "name": "Paulo"}}'
+2017-12-05 00:49:52.102 -02 [18691] ERROR:  ON CONFLICT DO UPDATE requires inference specification or constraint name at character 120
+2017-12-05 00:49:52.102 -02 [18691] HINT:  For example, ON CONFLICT (column_name).
+2017-12-05 00:49:52.102 -02 [18691] STATEMENT:  INSERT INTO events VALUES(1,'Create User', '{"user": {"is_person": true, "accounts": [], "uid": 1, "name": "Paulo"}}') ON CONFLICT DO UPDATE SET id=1, type='Create User', data='{"user": {"is_person": true, "accounts": [], "uid": 1, "name": "Paulo"}}'

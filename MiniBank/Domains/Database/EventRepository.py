@@ -48,18 +48,19 @@ class PersistentEventRepository(AbstractEventRepository):
             self.connection = psycopg2.connect("dbname='%s' user='%s' host='%s' password='%s' port='%s'" % (repo_data['dbname'], repo_data['user'], repo_data['address'], repo_data['pass'], repo_data['port']))
             self.connection.autocommit = True
             self.cursor = self.connection.cursor()
+            self.create_table()
         except:
             print "Failed to connect to repository %s@%s:%s" % (repo_data['dbname'], repo_data['address'], repo_data['port'])
 
-    #def create_table(self):
-    #    create_table_command = "CREATE TABLE IF NOT EXISTS events(id serial PRIMARY KEY, type varchar(30), data jsonb)"
-    #    self.cursor.execute(create_table_command)
+    def create_table(self):
+        create_table_command = "CREATE TABLE IF NOT EXISTS events(id serial PRIMARY KEY, type varchar(30), data jsonb)"
+        self.cursor.execute(create_table_command)
 
     def persist_event(self, event):
         '''persist event into storage'''
         if isinstance(event, Event):
             event = dict(event)
-        insert_command = "INSERT INTO events VALUES("+str(event["event_id"])+",'"+event["type"]+"', '"+json.dumps(event["value"])+"') ON CONFLICT DO NOTHING"
+        insert_command = "INSERT INTO events VALUES("+str(event["event_id"])+",'"+event["type"]+"', '"+json.dumps(event["value"])+"') ON CONFLICT (id) DO UPDATE SET id="+str(event["event_id"])+", type='"+event["type"]+"', data='"+json.dumps(event["value"])+"'"
         self.cursor.execute(insert_command)
         return event
 

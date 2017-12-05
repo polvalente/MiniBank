@@ -21,7 +21,7 @@ class test_PersistentEventRepository(unittest.TestCase):
         event_user_dict = {'user':dict(new_user)}
 
         #account
-        new_account = Account(1, 1, 0)
+        new_account = Account(1, 1, 0, 1)
         event_account_dict = {'account':dict(new_account), 'owner':dict(new_user)} 
         
         self.events = [

@@ -14,13 +14,13 @@ class TestApplicationState(unittest.TestCase):
         event_user_dict = {'user':dict(new_user)}
 
         #account
-        new_account = Account(1, 1, 0)
+        new_account = Account(1, 1, 0,1)
         event_account_dict = {'account':dict(new_account), 'owner':dict(new_user)} 
         
         #transactions
-        event_deposit1_dict  = {'account': dict(new_account), 'transaction': dict(Transaction("deposit", 10))}
-        event_deposit2_dict  = {'account': dict(new_account), 'transaction': dict(Transaction("deposit", 200))}
-        event_withdraw1_dict = {'account': dict(new_account),'transaction': dict(Transaction("withdraw",110))}
+        event_deposit1_dict  = {'account': dict(new_account), 'transaction': dict(Transaction("deposit", 10, 1))}
+        event_deposit2_dict  = {'account': dict(new_account), 'transaction': dict(Transaction("deposit", 200, 2))}
+        event_withdraw1_dict = {'account': dict(new_account),'transaction': dict(Transaction("withdraw",110, 3))}
         self.events = [
                 Event("Create User",event_user_dict,1),
                 Event("Create Account", event_account_dict,2),
@@ -66,6 +66,7 @@ class TestApplicationState(unittest.TestCase):
         new_state.events.append(self.events[1])
         new_state.users[self.events[1].value['owner']['uid']] = User(self.events[1].value['owner'])
         new_state.users[self.events[1].value['owner']['uid']].accounts.append(account)
+        new_state.next_transaction_id = 1
         
         result = self.app_state + self.events[1]
 

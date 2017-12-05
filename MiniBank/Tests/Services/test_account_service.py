@@ -16,14 +16,14 @@ class test_AccountService(unittest.TestCase):
         event_user_dict = {'user':dict(new_user)}
 
         #account
-        new_account = Account(1, 1, 0)
+        new_account = Account(1, 1, 0, 1)
         self.new_account = new_account
         event_account_dict = {'account':dict(new_account), 'owner':dict(new_user)} 
         
         #transactions
-        event_deposit1_dict  = {'account': dict(new_account), 'transaction': dict(Transaction("deposit", 10))}
-        event_deposit2_dict  = {'account': dict(new_account), 'transaction': dict(Transaction("deposit", 200))}
-        event_withdraw1_dict = {'account': dict(new_account),'transaction': dict(Transaction("withdraw",110))}
+        event_deposit1_dict  = {'account': dict(new_account), 'transaction': dict(Transaction("deposit", 10, 2))}
+        event_deposit2_dict  = {'account': dict(new_account), 'transaction': dict(Transaction("deposit", 200, 3))}
+        event_withdraw1_dict = {'account': dict(new_account),'transaction': dict(Transaction("withdraw",110, 4))}
 
         self.events = [
                 Event("Create User",event_user_dict,1),
@@ -35,9 +35,9 @@ class test_AccountService(unittest.TestCase):
         self.post_user = dcopy(new_user)
         self.post_account = dcopy(new_account)
         self.post_user.add_account(self.post_account)
-        self.post_account.deposit(10)
-        self.post_account.deposit(200)
-        self.post_account.withdraw(110)
+        self.post_account.deposit(10, 2)
+        self.post_account.deposit(200, 3)
+        self.post_account.withdraw(110, 4)
 
         self.event_repo.persist_event(self.events[0])
         self.app_service = ApplicationService(self.event_repo)
@@ -83,9 +83,8 @@ class test_AccountService(unittest.TestCase):
         result = account_service.deposit_to_account(1,100)
 
         account = dcopy(self.post_account)
-        account.deposit(100)
 
-        event = Event("Deposit", {'account':dict(account), 'transaction':dict(Transaction("deposit",100))}, 6)
+        event = Event("Deposit", {'account':dict(account), 'transaction':dict(Transaction("deposit",100,5))}, 6)
         
         msg = "\n\nres:"+json.dumps(dict(result),indent=4)
         msg += "\n\nevt:"+json.dumps(dict(event), indent=4)
@@ -111,9 +110,8 @@ class test_AccountService(unittest.TestCase):
         result = account_service.withdraw_from_account(1,1,100)
 
         account = dcopy(self.post_account)
-        account.withdraw(100)
 
-        event = Event("Withdraw", {'account':dict(account), 'transaction':dict(Transaction("withdraw",100))}, 6)
+        event = Event("Withdraw", {'account':dict(account), 'transaction':dict(Transaction("withdraw",100,5))}, 6)
         
         msg = "\n\nres:"+json.dumps(dict(result),indent=4)
         msg += "\n\nevt:"+json.dumps(dict(event), indent=4)

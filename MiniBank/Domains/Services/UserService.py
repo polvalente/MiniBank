@@ -13,7 +13,7 @@ class UserService(object):
     def create_account(self, uid, balance = 0):
         account = self.account_service.create_account(uid, balance)
         if account is None:
-            self.application_service.application_state.next_account_id -= 1
+            #self.application_service.application_state.next_account_id -= 1
             return None
         return account
 

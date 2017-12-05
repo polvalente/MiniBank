@@ -22,14 +22,14 @@ class test_UserService(unittest.TestCase):
         event_user_dict = {'user':dict(new_user)}
 
         #account
-        new_account = Account(1, 1, 0)
+        new_account = Account(1, 1, 0, 1)
         self.new_account = new_account
         event_account_dict = {'account':dict(new_account), 'owner':dict(new_user)} 
         
         #transactions
-        event_deposit1_dict  = {'account': dict(new_account), 'transaction': dict(Transaction("deposit", 10))}
-        event_deposit2_dict  = {'account': dict(new_account), 'transaction': dict(Transaction("deposit", 200))}
-        event_withdraw1_dict = {'account': dict(new_account),'transaction': dict(Transaction("withdraw",110))}
+        event_deposit1_dict  = {'account': dict(new_account), 'transaction': dict(Transaction("deposit", 10, 2))}
+        event_deposit2_dict  = {'account': dict(new_account), 'transaction': dict(Transaction("deposit", 200, 3))}
+        event_withdraw1_dict = {'account': dict(new_account),'transaction': dict(Transaction("withdraw",110, 4))}
 
         self.events = [
                 Event("Create User",event_user_dict,1),
@@ -41,9 +41,9 @@ class test_UserService(unittest.TestCase):
         self.post_user = dcopy(new_user)
         self.post_account = dcopy(new_account)
         self.post_user.add_account(self.post_account)
-        self.post_account.deposit(10)
-        self.post_account.deposit(200)
-        self.post_account.withdraw(110)
+        self.post_account.deposit(10, 2)
+        self.post_account.deposit(200, 3)
+        self.post_account.withdraw(110, 4)
 
         self.app_service = ApplicationService(self.event_repo)
         self.account_service = AccountService(self.app_service)
@@ -70,7 +70,7 @@ class test_UserService(unittest.TestCase):
         #test ok
         account = self.new_account
         result = self.user_service.create_account(1)
-        msg = "\n\ne:"+json.dumps(dict(account),indent=2)
+        msg = "\n\na:"+json.dumps(dict(account),indent=2)
         msg+= "\n\nr:"+json.dumps(dict(result),indent=2)
         self.assertEqual(result, account, msg)
 
