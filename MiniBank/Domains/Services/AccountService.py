@@ -13,10 +13,11 @@ class AccountService(object):
     def create_account(self, owner_id, initial_balance=0):
         #Getting new account's id from repo
         account_id = self.application_service.get_new_account_id()
+        transaction_id = self.application_service.get_new_transaction_id()
         #creating new account
         if initial_balance < 0:
             return None
-        new_account = Account(account_id, owner_id, initial_balance)
+        new_account = Account(account_id, owner_id, initial_balance, transaction_id)
         #adding event to event stack
 
         self.send_mail_to_cfo(new_account)
@@ -36,9 +37,11 @@ class AccountService(object):
         if account is None:
             return None
         #apply transaction to account 
-        transaction = account.can_deposit(amount)
-        if transaction is None:
+        if not account.can_deposit(amount):
             return None
+        
+        transaction_id = self.application_service.get_new_transaction_id()
+        transaction = Transaction("deposit", amount, transaction_id)
 
         #add transaction to event stack
         return self.application_service.apply_transaction(account, transaction)
@@ -49,9 +52,11 @@ class AccountService(object):
             return None
 
         #withdraw amount
-        transaction = account.can_withdraw(amount)
-        if transaction is None:
+        if not account.can_withdraw(amount):
             return None
+
+        transaction_id = self.application_service.get_new_transaction_id()
+        transaction = Transaction("withdraw", amount, transaction_id)
 
         #add transaction to event stack
         return self.application_service.apply_transaction(account, transaction)

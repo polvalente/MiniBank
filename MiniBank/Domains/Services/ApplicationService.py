@@ -34,7 +34,7 @@ class ApplicationService(object):
         if transaction.kind == "deposit":
             event = Event("Deposit", {'account':dict(account), 'transaction':dict(transaction)}, event_id)
         elif transaction.kind == "withdraw":
-            event = Event("Withdraw", {'account':dict(account), 'transaction'   :dict(transaction)}, event_id)
+            event = Event("Withdraw", {'account':dict(account), 'transaction':dict(transaction)}, event_id)
 
         self.application_state += event
 
@@ -51,12 +51,6 @@ class ApplicationService(object):
         #get from internal value
         return self.application_state.get_next_uid()
 
-    #def add_account(self, user, account):
-        #add account to app_state
-        #self.application_state.accounts[account.acc_id] = account
-        #no need to add event to repo, because every account has its user and account is added to user on user_service.create_account()
-        #return self.application_state.accounts[account.acc_id]
-
     def get_new_account_id(self):
         #get next account id from app_state
         return self.application_state.get_next_account_id()
@@ -69,6 +63,8 @@ class ApplicationService(object):
             account = None
         return account
         
-
     def get_accounts_by_owner_id(self, owner_id):
         return self.application_state.users[owner_id].accounts
+
+    def get_new_transaction_id(self):
+        return self.application_state.get_next_transaction_id()

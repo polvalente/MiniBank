@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1> Account Summary </h1>
+
+
+{% if account_summary %}
+<pre>
+    {{ account_summary|safe }}
+</pre>
+<input type="button" onclick="location.href='/account_summary;" value="Back" />
+
+{% else %}
+<form action="" method="post" name="get_account_summary">
+    {{ form.hidden_tag() }}
+    <p>
+    Insert owner's uid: {{form.user_id}}<br>
+    </p>
+    <p><input type="submit" value="Get Accounts Summary"></p>
+</form>
+{% endif %}
+{% endblock %}
